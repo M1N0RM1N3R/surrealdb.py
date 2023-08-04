@@ -144,10 +144,9 @@ class SurrealHTTP:
         Examples:
             await db.signup({"user": "bob", "pass": "123456"})
         """
-        response = await self._request(
+        return await self._request(
             method="POST", uri="/signup", data=json.dumps(vars)
         )
-        return response  # type: ignore
 
     async def signin(self, vars: Dict[str, Any]) -> str:
         """Sign this connection in to a specific authentication scope.
@@ -158,10 +157,9 @@ class SurrealHTTP:
         Examples:
             await db.signin({"user": "root", "pass": "root"})
         """
-        response = await self._request(
+        return await self._request(
             method="POST", uri="/signin", data=json.dumps(vars)
         )
-        return response  # type: ignore
 
     async def query(
         self, sql: str, vars: Optional[Dict[str, Any]] = None
@@ -185,8 +183,7 @@ class SurrealHTTP:
             Get all of the results from the second query
                 result[1]['result']
         """
-        response = await self._request(method="POST", uri="/sql", data=sql, params=vars)
-        return response  # type: ignore
+        return await self._request(method="POST", uri="/sql", data=sql, params=vars)
 
     async def select(self, thing: str) -> List[Dict[str, Any]]:
         """Select all records in a table (or other entity),
@@ -333,8 +330,7 @@ class SurrealHTTP:
                 await db.delete('person:h5wxrf2ewk8xjxosxtyc')
         """
         table, record_id = thing.split(":") if ":" in thing else (thing, None)
-        response = await self._request(
+        return await self._request(
             method="DELETE",
             uri=f"/key/{table}/{record_id}" if record_id else f"/key/{table}",
         )
-        return response  # type: ignore

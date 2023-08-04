@@ -85,11 +85,9 @@ class Request(pydantic.BaseModel):
     params: Optional[Tuple] = None
 
     @pydantic.validator("params", pre=True, always=True)
-    def validate_params(cls, value):  # pylint: disable=no-self-argument
+    def validate_params(cls, value):    # pylint: disable=no-self-argument
         """Validate the parameters of the request."""
-        if value is None:
-            return tuple()
-        return value
+        return tuple() if value is None else value
 
     class Config:
         """Represents the configuration of the RPC request."""
